@@ -1,11 +1,8 @@
 #include <iostream>
 using namespace std;
 
-void thingy() {
-    cout << "test successful";
-}
-
-int main () {
-    thingy();
+int main() {
+    string thing = "fkdmvlslekfkjcedsnclwjeknljds";
+    cout << sizeof(string);
     return 0;
 }
