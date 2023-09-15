@@ -26,11 +26,16 @@ int main() {
         cin >> input;
         cout << endl;
     }
-    srand(time(NULL));
+
+    /*Whenever a program runs, it takes up an allotted
+    section of stack memory, which is a part of RAM on
+    a computer that stores information on programs while
+    they're running.*/
+
     if (input == 'l') {
-        loop_forever(rand ()% 101);
+        loop_forever(1);
     } else {
-        recurse_forever(rand() % 101);
+        recurse_forever(1);
     }
 
     return 0;
