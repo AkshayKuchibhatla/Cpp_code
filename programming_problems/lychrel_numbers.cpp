@@ -14,8 +14,7 @@ int reverseNumber(int n) {
     return stoi(nStringReversed);
 }
 
-class returnVal {
-    public:
+struct returnVal {
         int finalNumber;
         int numberOfIterations;
         bool isLychrel;
@@ -41,6 +40,7 @@ returnVal isLychrel(int n) {
 }
 
 int main() {
+    cout << endl;
     int input;
     returnVal output;
 
@@ -52,9 +52,9 @@ int main() {
         output = isLychrel(input);
 
         if (output.isLychrel) {
-            cout << "Still a Lychrel number after 10 iterations: " << output.finalNumber << endl;
+            cout << "Still a Lychrel number after 10 iterations: " << output.finalNumber << endl << endl;
         } else {
-            cout << "Not a Lychrel number after " << output.numberOfIterations << " iterations: " << output.finalNumber << endl;
+            cout << "Not a Lychrel number after " << output.numberOfIterations << " iterations: " << output.finalNumber << endl << endl;
         }
     }
 
