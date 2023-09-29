@@ -2,9 +2,9 @@
 using namespace std;
 
 void incrementVariable(const double& x) {
-    x++; // This returns an error, because it means that
+    //x++; // This returns an error, because it means that
     // you're trying to modify a constant, which is an 
-    // immutable data type.
+    // immutable data type. The code won't even compile.
 }
 
 int main() {
