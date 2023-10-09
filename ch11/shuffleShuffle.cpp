@@ -1,6 +1,10 @@
 #include <iostream>
 using namespace std;
 
+struct ListStruct {
+    int arr[8];
+};
+
 void swapListElements(int* list, int index1, int index2) {
     int* listPointer = list;
     int* firstElement = listPointer + index1;
@@ -18,50 +22,54 @@ void modifierShuffle(int pList[], int size) {
     }
 }
 
-int* pureShuffle(int pList[], int size) {
-    int copy[] = *pList;
-    int x;
-    int y;
-    int temp;
-    srand(NULL);
+ListStruct pureShuffle(int pList[], int size) {
+    ListStruct pList_struct;
     for (int i = 0; i < size; i++) {
-        x = pList[i];
+        pList_struct.arr[i] = pList[i];
+    }
+    int x = -1;
+    int y = -1;
+    int temp = -1;
+    srand(time(NULL));
+    for (int i = 0; i < size; i++) {
+        x = pList_struct.arr[i];
         y = pList[rand() % size];
         temp = x;
         x = y;
         y = temp;
     }
-    return pList;
+    return pList_struct;
 }
 
 int main() {
+    cout << endl;
     int numbers[8] = {23, 47, 56, 89, 92, 100, 98, 37};
     cout << "ORIGINAL LIST: " << endl;
-    int n = sizeof(numbers) / sizeof(int);
-    for (int i = 0; i < 5; i++) {
-        cout << numbers[i] << endl;
+    for (int i = 0; i < 8; i++) {
+        cout << numbers[i] << ", ";
     }
 
-    cout << endl;
+    cout << "\n\n";
     cout << "AFTER MODIFIER FUNCTION SHUFFLE: " << endl;
-    modifierShuffle(numbers, n);
-    for (int i = 0; i < 5; i++) {
-        cout << numbers[i] << endl;
+    modifierShuffle(numbers, 8);
+    for (int i = 0; i < 8; i++) {
+        cout << numbers[i] << ", ";
     }
 
-    cout << endl;
+    cout << "\n\n";
     int numbers2[8] = {94, 45, 96, 85, 12, 34, 70, 63};
     cout << "ORIGINAL LIST: " << endl;
-    n = sizeof(numbers2) / sizeof(int);
-    for (int i = 0; i < 5; i++) {
-        cout << numbers[i] << endl;
+    for (int i = 0; i < 8; i++) {
+        cout << numbers2[i] << ", ";
+    }
+
+    cout << "\n\n";
+    cout << "AFTER PURE FUNCTION SHUFFLE: " << endl;
+    ListStruct demo = pureShuffle(numbers2, 8);
+    for (int i = 0; i < 8; i++) {
+        cout << demo.arr[i] << ", ";
     }
 
     cout << endl;
-    cout << "AFTER PURE FUNCTION SHUFFLE: " << endl;
-    // int x[] = pureShuffle(numbers2, n);
-    for (int i = 0; i < 5; i++) {
-        cout << numbers[i] << endl;
-    }
     return 0;
 }
