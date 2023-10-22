@@ -1,0 +1,6 @@
+<RCC>
+  <qresource prefix="/Quick_Qt/">
+    <file alias="Main.qml">/Users/1013708/Cpp_code/Quick_Qt/Main.qml</file>
+  </qresource>
+</RCC>
+
