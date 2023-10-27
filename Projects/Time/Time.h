@@ -12,6 +12,7 @@ struct Time {
     bool after(Time pTime);
     double convertToSeconds() const;
     Time add(Time t2);
+    std::string time_to_string();
 
     // Constructors
     Time();

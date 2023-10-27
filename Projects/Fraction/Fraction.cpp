@@ -1,6 +1,5 @@
 #include <iostream>
 #include "Fraction.h"
-#include <cmath>
 using namespace std;
 
 // Constructors:
