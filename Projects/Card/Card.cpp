@@ -16,8 +16,8 @@ Card::Card(int r, int s) {
 
 string Card::to_string() {
     vector<string> suit_strings = {"Clubs", "Diamonds", "Hearts", "Spades"}; 
-    vector<string> rank_strings = {"", "Ace", "2", "3", "4", "5", "6", "7",
-                                   "8", "9", "10", "Jack", "Queen", "King"};
+    vector<string> rank_strings = {"", "", "2", "3", "4", "5", "6", "7",
+                                   "8", "9", "10", "Jack", "Queen", "King", "Ace"};
     
     return rank_strings[this->rank] + " of " + suit_strings[this->suit];
 }
@@ -33,4 +33,3 @@ bool Card::isGreaterThan(Card card) {
 
     return false;
 }
-
