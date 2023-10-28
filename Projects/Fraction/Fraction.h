@@ -19,6 +19,7 @@ struct Fraction {
     // These are some pure functions:
     int LCM(int number1, int number2);
     int GCF(int number1, int number2);
+    std::string to_string();
 
     // ...and you can't forget print:
     void print();

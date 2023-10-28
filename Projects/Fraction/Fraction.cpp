@@ -85,3 +85,9 @@ int Fraction::LCM(int number1, int number2) {
 void Fraction::print() {
     cout << this->numerator << "/" << this->denominator;
 }
+std::string Fraction::to_string() {
+    if (this->denominator == 1) {
+        return std::to_string(this->numerator);
+    }
+    return std::to_string(this->numerator) + "/" + std::to_string(this->denominator);
+}

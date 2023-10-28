@@ -28,10 +28,7 @@ int main() {
     Fraction fraction1(num1, den1);
     Fraction fraction2(num2, den2);
     
-    fraction1.print();
-    cout << " " << operation << " ";
-    fraction2.print();
-    cout << " = ";
+    cout << fraction1.to_string() << " " << operation << " " << fraction2.to_string() << " = ";
 
     switch (operation) {
     case '+':
@@ -49,7 +46,7 @@ int main() {
         break;
     }
 
-    fraction1.print();
+    cout << fraction1.to_string();
     
     cout << endl;
 
