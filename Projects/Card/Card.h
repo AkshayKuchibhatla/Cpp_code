@@ -6,6 +6,7 @@ struct Card {
     Card(int r, int s);
 
     // Pure functions
-    string to_string();
-    bool equals(Card c2);
+    std::string to_string();
+    bool equals(Card card);
+    bool isGreaterThan(Card card);
 };

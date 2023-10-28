@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <string>
 #include "Card.h"
 using namespace std;
 
@@ -18,9 +19,18 @@ string Card::to_string() {
     vector<string> rank_strings = {"", "Ace", "2", "3", "4", "5", "6", "7",
                                    "8", "9", "10", "Jack", "Queen", "King"};
     
-    return rank_strings[this->rank] + "of" + suit_strings[this->suit];
+    return rank_strings[this->rank] + " of " + suit_strings[this->suit];
 }
 bool Card::equals(Card card) {
     return (this->rank == card.rank && this->suit == card.suit);
+}
+bool Card::isGreaterThan(Card card) {
+    if (this->suit > card.suit) return true;
+    if (this->suit < card.suit) return false;
+
+    if (this->rank > card.rank) return true;
+    if (this->rank < card.rank) return false;
+
+    return false;
 }
 
