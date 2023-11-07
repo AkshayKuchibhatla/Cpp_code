@@ -1,2 +1,3 @@
-g++ Fraction.cpp FractionTest.cpp
-./a.out
+mkdir -p ./build/
+g++ Fraction.cpp FractionTest.cpp -o ./build/FractionBin
+./build/FractionBin

@@ -10,8 +10,8 @@ bool equals(Card c1, Card c2) {
 vector<Card> buildDeck() {
     vector<Card> deck(52);
     int i = 0;
-    for (int s = 0; s < 4; s++) {
-        for (int r = 2; r < 15; r++) {
+    for (Suit s = CLUBS; s < SPADES; s = Suit(s + 1)) {
+        for (Rank r = TWO; r < ACE; r = Rank(r + 1)) {
             deck[i].suit = s;
             deck[i].rank = r;
             i++;
@@ -40,8 +40,8 @@ int binarySearch(Card& card, vector<Card>& deck, int l, int h) {
 }
 
 int main() {
-    Card ace_of_spades(14,3);
-    Card definitely_not_ace_of_spades(14,3);
+    Card ace_of_spades(ACE,SPADES);
+    Card definitely_not_ace_of_spades(ACE,SPADES);
     cout << equals(ace_of_spades, definitely_not_ace_of_spades) << endl << endl;
 
     vector<Card> newDeck = buildDeck();
@@ -50,7 +50,7 @@ int main() {
     cout << newDeck[index].to_string() << " found at index " 
     << index << "." << endl << endl;
 
-    Card fakeCard(1, 15);
+    Card fakeCard(KING, SPADES);
     index = binarySearch(fakeCard, newDeck, 0, 51);
     cout << newDeck[index].to_string() << " found at index " << index << ".";
     return 0;
