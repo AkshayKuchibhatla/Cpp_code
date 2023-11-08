@@ -4,11 +4,24 @@ using namespace std;
 
 int main() {
     Hangman hangman;
-    string word = words[rand() % 225];
+    char letter;
     
-    for (int i = 1; i <= 7; i++) {
-        hangman.setStage(Stage(i*7));
+    while (hangman.stage != BOTH_LEGS) {
         hangman.render();
+        cout << "Guess a letter: ";
+        cin >> letter;
+
+        if (hangman.hasLetter(letter)) {
+            hangman.replaceLetters(letter);
+            if (hangman.userGuess == hangman.word) {
+                cout << "\n\n" << "Good job. You have successfully guessed the word.";
+                return 0;
+            }
+        } else {
+            hangman.nextStage();
+        }
     }
+    hangman.render();
+    cout << "\n\n" << "The word was " << hangman.word << ".";
     return 0;
 }

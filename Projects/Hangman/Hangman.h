@@ -7,32 +7,40 @@ enum Stage {
     ONE_LEG=42,
     BOTH_LEGS=49
 };
-const string words[225] = {
-    "surface","excellent","arrangement","year","paragraph","my","herd","too","construction","friendly","wonderful","deeply","account","pure","combine"
-    "consonant","quick","chemical","dust","fed","dirty","because","weigh","airplane","enemy","applied","pride","even","steady","disease"
-    "surprise","education","growth","year","worse","bone","home","course","porch","mud","coming","gentle","carbon","making","handsome"
-    "known","silly","able","score","most","pile","safe","very","body","spin","round","planned","sugar","bend","combine"
-    "read","dozen","win","shore","act","pull","notice","throughout","pictured","guard","enter","such","language","ranch","fresh"
-    "stranger","invented","summer","without","example","bat","right","tin","almost","disease","trick","stick","sit","soap","football"
-    "building","cast","buried","important","send","hurry","sudden","become","here","throat","attention","theory","forgot","bill","known"
-    "gave","freedom","dance","courage","boat","lie","office","noun","shoe","twice","luck","kids","effect","strange","develop"
-    "carbon","women","hunt","leather","piece","religious","desk","station","soft","biggest","sent","pair","chemical","seven","over"
-    "well","double","tent","grade","applied","review","hidden","recall","small","brass","should","broken","perfectly","corn","bank"
-    "hold","spite","birthday","composition","television","upon","degree","yard","course","type","additional","least","expression","refused","twice"
-    "brave","degree","go","trunk","though","grabbed","open","come","paper","plane","shelter","will","party","require","slave"
-    "acres","why","shape","think","roof","everybody","tiny","high","product","sign","sunlight","heavy","choose","shelter","coach"
-    "luck","sense","look","teach","society","drove","seldom","been","anybody","bow","let","victory","manner","top","line"
-    "immediately","screen","exactly","ran","typical","brave","softly","range","luck","solar","vegetable","whom","darkness","sense","coffee"
-    "clothing","fact","equator","green","airplane","hungry","eleven","view","carbon","drop","health","concerned","doing","careful","shut"
+
+const std::string words[240] = {
+    "might","aside","once","breathing","stood","atom","game","us","powerful","view","name","unit","remove","long","hill",
+    "moment","hang","dropped","knife","lack","week","composition","situation","temperature","off","including","unless","engineer","explain","belong",
+    "barn","capital","met","trunk","blanket","massage","hardly","nearer","activity","feel","exchange","ants","cast","explain","contain",
+    "coach","ate","vessels","spell","surrounded","village","produce","characteristic","later","signal","wish","driving","never","am","cloud",
+    "slip","cream","factor","board","group","die","selection","fruit","pool","village","rise","shake","flat","support","negative",
+    "onto","built","gave","field","understanding","perfect","north","curve","declared","join","park","thank","herd","source","feel",
+    "gate","adult","dropped","out","measure","type","vapor","comfortable","grass","snow","went","then","buy","valley","success",
+    "correctly","sink","pitch","up","load","cry","negative","voyage","clothes","send","home","shade","handsome","aware","ever",
+    "fewer","vast","angry","atomic","leave","community","scientific","put","mistake","recognize","huge","today","discuss","bit","introduced",
+    "brown","live","average","he","electricity","serious","crop","fair","sugar","fair","distant","written","harbor","heat","modern",
+    "stick","pie","dried","simply","owner","dawn","together","nervous","tired","vowel","at","finger","alike","raise","sun",
+    "naturally","angle","post","tomorrow","church","those","no","zero","motion","ourselves","proper","case","crop","cookies","die",
+    "mirror","castle","bottle","black","expect","bill","keep","scene","fuel","instrument","everywhere","problem","route","whistle","form",
+    "prevent","forget","atomic","brain","save","black","nothing","yes","tiny","red","expect","few","earth","pond","sale",
+    "anyway","ever","throughout","trick","mind","spent","arrangement","them","moment","darkness","nuts","highest","police","industry","made",
+    "amount","harder","edge","fewer","glad","depend","realize","successful","some","face","lunch","dot","vessels","due","hope"
 };
 
 struct Hangman {
     Stage stage;
     std::string word;
+    std::string userGuess;
 
     // Constructor
     Hangman();
 
+    // Modifiers
     void render();
     void setStage(Stage stage);
+    void nextStage();
+    void replaceLetters(char letter);
+
+    // Pure function
+    bool hasLetter(char letter);
 };
