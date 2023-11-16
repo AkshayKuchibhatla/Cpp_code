@@ -34,6 +34,7 @@ struct Snowman {
 
     // Constructor
     Snowman();
+    Snowman(std::string word);
 
     // Modifiers
     void render();

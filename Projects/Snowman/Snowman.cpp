@@ -13,6 +13,14 @@ Snowman::Snowman() {
     }
     this->stage = FULL;
 }
+Snowman::Snowman(string aWord) {
+    this->word = aWord;
+    this->userGuess = "";
+    for (int i = 0; i < this->word.length(); i++) {
+        this->userGuess += "_";
+    }
+    this->stage = FULL;
+}
 
 void Snowman::setStage(Stage stage) {
     this->stage = stage;
