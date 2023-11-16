@@ -1,11 +1,11 @@
 enum Stage {
-    EMPTY=7,
-    HEAD=14,
-    BODY=21,
-    ONE_ARM=28,
-    BOTH_ARMS=35,
-    ONE_LEG=42,
-    BOTH_LEGS=49
+    FULL = 6,
+    NO_HAT = 12,
+    NO_RIGHT_ARM = 18,
+    NO_LEFT_ARM = 24,
+    NO_BASE = 30,
+    NO_MIDDLE = 36,
+    MELTED = 42
 };
 
 const std::string words[240] = {
@@ -27,13 +27,13 @@ const std::string words[240] = {
     "amount","harder","edge","fewer","glad","depend","realize","successful","some","face","lunch","dot","vessels","due","hope"
 };
 
-struct Hangman {
+struct Snowman {
     Stage stage;
     std::string word;
     std::string userGuess;
 
     // Constructor
-    Hangman();
+    Snowman();
 
     // Modifiers
     void render();

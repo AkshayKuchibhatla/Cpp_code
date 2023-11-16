@@ -1,27 +1,27 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
-#include "Hangman.h"
+#include "Snowman.h"
 using namespace std;
 
-Hangman::Hangman() {
+Snowman::Snowman() {
     srand(time(NULL));
     this->word = words[rand() % 240];
     this->userGuess = "";
     for (int i = 0; i < this->word.length(); i++) {
-        userGuess += "_";
+        this->userGuess += "_";
     }
-    this->stage = EMPTY;
+    this->stage = FULL;
 }
 
-void Hangman::setStage(Stage stage) {
+void Snowman::setStage(Stage stage) {
     this->stage = stage;
 }
-void Hangman::nextStage() {
-    this->setStage(Stage(this->stage + 7));
+void Snowman::nextStage() {
+    this->setStage(Stage(this->stage + 6));
 }
-void Hangman::render() { // This is basically to_string().
-    ifstream readFile("Hangman.txt");
+void Snowman::render() { // This is basically to_string().
+    ifstream readFile("Snowman.txt");
     vector<string> lines;
     lines.push_back("");/*Assign an empty value 
     to the 0th index so mapping indexes is easy.*/
@@ -30,12 +30,12 @@ void Hangman::render() { // This is basically to_string().
         lines.push_back(line);
     }
     
-    for (int i = this->stage - 6; i <= this->stage; i++) {
+    for (int i = this->stage - 5; i <= this->stage; i++) {
         cout << lines[i] << endl;
     }
     cout << this->userGuess << "\n\n";
 }
-void Hangman::replaceLetters(char letter) {
+void Snowman::replaceLetters(char letter) {
     for (int i = 0; i < this->word.length(); i++) {
         if (letter == this->word[i]) {
             userGuess[i] = letter;
@@ -43,7 +43,7 @@ void Hangman::replaceLetters(char letter) {
     }
 }
 
-bool Hangman::hasLetter(char letter) {
+bool Snowman::hasLetter(char letter) {
     for (int i = 0; i < this->word.length(); i++) {
         if (letter == this->word[i]) {
             return true;
