@@ -18,6 +18,8 @@ string Card::to_string() {
     string s;
     string r;
     switch (this->suit) {
+    case NONE:
+        s = "";
     case CLUBS:
         s = "Clubs"; 
         break;
@@ -36,6 +38,9 @@ string Card::to_string() {
     }
 
     switch (this->rank) {
+    case JOKER:
+        r = "Joker";
+        return r;
     case TWO:
         r = "Two"; 
         break;

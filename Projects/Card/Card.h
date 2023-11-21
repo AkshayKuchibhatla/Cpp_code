@@ -1,11 +1,13 @@
 enum Suit {
-    CLUBS,
+    NONE=-1,
+    CLUBS=0,
     DIAMONDS,
     HEARTS,
     SPADES
 };
 
 enum Rank {
+    JOKER,
     TWO=2,
     THREE,
     FOUR,
