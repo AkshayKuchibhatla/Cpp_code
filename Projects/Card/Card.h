@@ -26,10 +26,11 @@ enum Rank {
 struct Card {
     Rank rank;
     Suit suit;
+    Deck deck;
 
     // Constructors
     Card();
-    Card(Rank r, Suit s);
+    Card(Rank r, Suit s, int deckSize);
 
     // Pure functions
     std::string to_string();

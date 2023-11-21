@@ -7,10 +7,12 @@ using namespace std;
 Card::Card() {
     this->rank = ACE;
     this->suit = CLUBS;
+    this->deck();
 }
-Card::Card(Rank r, Suit s) {
+Card::Card(Rank r, Suit s, int deckSize) {
     this->rank = r;
     this->suit = s;
+    this->deck(deckSize);
 }
 
 
@@ -84,7 +86,7 @@ string Card::to_string() {
         r = "Two";
         break;
     }
-    
+
     return r + " of " + s;
 }
 bool Card::equals(Card card) {
