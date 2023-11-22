@@ -62,4 +62,11 @@ Deck Deck::subdeck(int lowerIndex, int upperIndex) {
     for (int i = 0; i < sub.cards.size(); i++) {
         sub.cards.push_back(this->cards[lowerIndex + i]);
     }
+    return sub;
+}
+int Deck::findCard(Card& card) {
+    for (int i = 0; i < this->cards.size(); i++) {
+        if (this->cards[i].equals(card)) return i;
+    }
+    return -1;
 }

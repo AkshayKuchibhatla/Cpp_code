@@ -1,10 +1,11 @@
 #include <iostream>
 #include <vector>
 #include "Card.h"
+#include "Deck.h"
 using namespace std;
 
 int main() {
-    Suit s = CLUBS;
-    cout << s;
+    Card defaultCard(true);
+    cout << defaultCard.to_string();
     return 0;
 }

@@ -1,3 +1,5 @@
+#include "Deck.h"
+
 enum Suit {
     NONE=-1,
     CLUBS=0,
@@ -29,8 +31,9 @@ struct Card {
     Deck deck;
 
     // Constructors
-    Card();
-    Card(Rank r, Suit s, int deckSize);
+    Card(bool deck);
+    Card(Rank r, Suit s);
+    Card(int deckSize);
 
     // Pure functions
     std::string to_string();

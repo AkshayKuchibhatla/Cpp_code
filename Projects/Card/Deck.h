@@ -12,6 +12,7 @@ struct Deck {
     void Deck::sort();
     void Deck::addCard(Card card);
 
-    int binarySearch(Card& card, int low, int high);
+    int Deck::binarySearch(Card& card, int low, int high);
+    int Deck::findCard(Card& card);
     Deck Deck::subdeck(int lowerIndex, int upperIndex);
 };
