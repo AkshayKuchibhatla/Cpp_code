@@ -1,3 +1,3 @@
 mkdir -p ./build/
-g++ Fraction.cpp FractionTest.cpp -o ./build/FractionBin
+g++ -std=c++11 Fraction.cpp FractionTest.cpp -o ./build/FractionBin
 ./build/FractionBin

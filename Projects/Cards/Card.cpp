@@ -2,40 +2,17 @@
 #include <vector>
 #include <string>
 #include "Card.h"
-#include "Deck.h"
 using namespace std;
 
-Card::Card(bool deck) {
-    /* This constructor will create a default deck
-    if true is passed to it, otherwise it will create
-    just a default single card.*/
-    if (deck) {
-        this->deck();
-        delete this->suit;
-        delete this->rank;
-    } else {
-        /* Creates a single ace of spades by default. 
-        No deck is created. This is to ensure that the
-        individual cards in decks don't have their OWN
-        decks in them unnecessarily.*/
-        this->rank = ACE;
-        this->suit = CLUBS;
-        delete this->deck;
-    }
-}
 Card::Card(Rank r, Suit s) {
-    /* Creates the card of mentioned suit and rank.
-    Doesn't make a deck.*/
+    /* Creates the card of mentioned suit and rank.*/
     this->rank = r;
     this->suit = s;
-    delete this->deck;
 }
-Card::Card(int decksize) {
-    /* Makes a deck object only. Decks don't need
-    suit or rank.*/
-    this->deck(decksize);
-    delete this->rank;
-    delete this->suit;
+Card::Card() {
+    /* Makes a default card.*/
+    this->rank = ACE;
+    this->suit = SPADES;
 }
 
 

@@ -1,5 +1,7 @@
-#include "Deck.h"
-
+#ifndef CARD_H
+/* #ifndef is so the struct isn't accidentally
+defined many times.*/
+#define CARD_H
 enum Suit {
     NONE=-1,
     CLUBS=0,
@@ -28,15 +30,15 @@ enum Rank {
 struct Card {
     Rank rank;
     Suit suit;
-    Deck deck;
 
     // Constructors
-    Card(bool deck);
+    Card();
     Card(Rank r, Suit s);
-    Card(int deckSize);
 
     // Pure functions
     std::string to_string();
     bool equals(Card card);
     bool isGreaterThan(Card card);
 };
+
+#endif
