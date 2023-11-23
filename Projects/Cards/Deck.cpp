@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "Deck.h"
+// #include "Deck.h"
 #include "Card.h"
 using namespace std;
 
@@ -10,8 +10,8 @@ Deck::Deck(int size) {
 Deck::Deck() {
     vector<Card> deck(52);
     int i = 0;
-    for (Suit s = Suit(0); s < SPADES; s = Suit(s + 1)) {
-        for (Rank r = Rank(2); r < ACE; r = Rank(r + 1)) {
+    for (Suit s = CLUBS; s <= SPADES; s = Suit(s + 1)) {
+        for (Rank r = TWO; r <= ACE; r = Rank(r + 1)) {
             deck[i].suit = s;
             deck[i].rank = r;
             i++;
@@ -43,6 +43,9 @@ void Deck::shuffle() {
     for (int i = 0; i < this->cardsList.size(); i++) {
         swapItems(i, rand() % this->cardsList.size());
     }
+}
+void Deck::addCard(Card card) {
+    this->cardsList.push_back(card);
 }
 
 int Deck::binarySearch(Card& card, int low, int high) {

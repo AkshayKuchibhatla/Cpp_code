@@ -1,10 +1,13 @@
+#include <string>
+#include <vector>
+
 #ifndef CARD_H
 /* #ifndef is so the struct isn't accidentally
 defined many times.*/
 #define CARD_H
 enum Suit {
-    NONE=-1,
-    CLUBS=0,
+    NONE,
+    CLUBS,
     DIAMONDS,
     HEARTS,
     SPADES
@@ -41,4 +44,20 @@ struct Card {
     bool isGreaterThan(Card card);
 };
 
+struct Deck {
+    std::vector<Card> cardsList;
+
+    Deck(int size);
+    Deck();
+
+    void print();
+    void swapItems(int index1, int index2);
+    void shuffle();
+    void mergeSort();
+    void addCard(Card card);
+
+    int binarySearch(Card& card, int low, int high);
+    int findCard(Card& card);
+    Deck subdeck(int lowerIndex, int upperIndex);
+};
 #endif
