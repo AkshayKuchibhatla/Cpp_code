@@ -1,10 +1,6 @@
 #include <string>
 #include <vector>
 
-#ifndef CARD_H
-/* #ifndef is so the struct isn't accidentally
-defined many times.*/
-#define CARD_H
 enum Suit {
     NONE,
     CLUBS,
@@ -60,4 +56,3 @@ struct Deck {
     int findCard(Card& card);
     Deck subdeck(int lowerIndex, int upperIndex);
 };
-#endif

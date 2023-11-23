@@ -126,6 +126,7 @@ void Deck::print() {
     }
 }
 void Deck::swapItems(int index1, int index2) {
+    // Swaps the cards at the given indicies.
     vector<Card>* listPtr = &this->cardsList;
     Card* firstElementptr = &listPtr->at(index1);
     Card* secondElementptr = &listPtr->at(index2);
@@ -133,9 +134,6 @@ void Deck::swapItems(int index1, int index2) {
     temp = *firstElementptr;
     *firstElementptr = *secondElementptr;
     *secondElementptr = temp;
-    // delete listPtr;
-    // delete firstElementptr;
-    // delete secondElementptr;
 }
 void Deck::shuffle() {
     srand(time(NULL));
