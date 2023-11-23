@@ -4,17 +4,14 @@
 #include "Card.h"
 using namespace std;
 
+//============================CARD================================
+
 Card::Card(Rank r, Suit s) {
     /* Creates the card of mentioned suit and rank.*/
     this->rank = r;
     this->suit = s;
 }
-Card::Card() {
-    // /* Makes a default card.*/
-    // this->rank = ACE;
-    // this->suit = SPADES;
-}
-
+Card::Card() {}
 
 string Card::to_string() {
     string s;
@@ -102,6 +99,17 @@ bool Card::isGreaterThan(Card card) {
 
     return false;
 }
+bool Card::isLessThan(Card card) {
+    if (this->suit < card.suit) return true;
+    if (this->suit > card.suit) return false;
+
+    if (this->rank < card.rank) return true;
+    if (this->rank > card.rank) return false;
+
+    return false;
+}
+
+//============================DECK================================
 
 Deck::Deck(int size) {
     this->cardsList = vector<Card> (size);
@@ -145,6 +153,11 @@ void Deck::shuffle() {
 void Deck::addCard(Card card) {
     this->cardsList.push_back(card);
 }
+void Deck::selectionSort() {
+    for (int i = 0; i < this->cardsList.size(); i++) {
+        swapItems(i, this->lowestCardIndex(i, this->cardsList.size() - 1));
+    }
+}
 
 int Deck::binarySearch(Card& card, int low, int high) {
     int middle = (low + high) / 2;
@@ -170,4 +183,13 @@ int Deck::findCard(Card& card) {
         if (this->cardsList[i].equals(card)) return i;
     }
     return -1;
+}
+int Deck::lowestCardIndex(int low, int high) {
+    int lowInd = low;
+    for (int i = low; i <= high; i++){
+        if (this->cardsList[i].isLessThan(this->cardsList[lowInd])) {
+            lowInd = i;
+        }
+    }
+    return lowInd;
 }

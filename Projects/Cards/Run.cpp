@@ -23,5 +23,12 @@ int main() {
     cout << "deck.findCard(diamondJack): " 
     << deck.findCard(diamondJack) << endl << endl;
     deck.print();
+
+    cout << "\n\n\n" << deck.lowestCardIndex(0, 10) << ", " 
+    << deck.cardsList[deck.lowestCardIndex(0, 10)].to_string();
+
+    cout << "\n\n\n";
+    deck.selectionSort();
+    deck.print();
     return 0;
 }

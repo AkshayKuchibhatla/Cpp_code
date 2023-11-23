@@ -38,6 +38,7 @@ struct Card {
     std::string to_string();
     bool equals(Card card);
     bool isGreaterThan(Card card);
+    bool isLessThan(Card card);
 };
 
 struct Deck {
@@ -50,9 +51,11 @@ struct Deck {
     void swapItems(int index1, int index2);
     void shuffle();
     void mergeSort();
+    void selectionSort();
     void addCard(Card card);
 
     int binarySearch(Card& card, int low, int high);
     int findCard(Card& card);
+    int lowestCardIndex(int low, int high);
     Deck subdeck(int lowerIndex, int upperIndex);
 };
