@@ -50,7 +50,6 @@ struct Deck {
     void print();
     void swapItems(int index1, int index2);
     void shuffle();
-    void mergeSort();
     void selectionSort();
     void addCard(Card card);
 
@@ -58,4 +57,6 @@ struct Deck {
     int findCard(Card& card);
     int lowestCardIndex(int low, int high);
     Deck subdeck(int lowerIndex, int upperIndex);
+    Deck merge(Deck deck);
+    Deck mergeSort();
 };

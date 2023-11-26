@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <cmath>
 #include "Card.h"
 using namespace std;
 
@@ -171,10 +172,10 @@ int Deck::binarySearch(Card& card, int low, int high) {
     }
 }
 Deck Deck::subdeck(int lowerIndex, int upperIndex) {
-    Deck sub(1);
+    Deck sub(upperIndex - lowerIndex);
 
     for (int i = 0; i < sub.cardsList.size(); i++) {
-        sub.cardsList.push_back(this->cardsList[lowerIndex + i]);
+        sub.cardsList[i] = this->cardsList[lowerIndex + i];
     }
     return sub;
 }
@@ -192,4 +193,39 @@ int Deck::lowestCardIndex(int low, int high) {
         }
     }
     return lowInd;
+}
+Deck Deck::merge(Deck deck) {
+    /* Merges 2 sorted decks into one sorted deck.*/
+    Deck sumDeck = Deck(0);
+    int iThis = 0; // Used for this cardsList.
+    int iD = 0; // Used fot d's cardsList.
+    while (iThis < this->cardsList.size() && iD < deck.cardsList.size()) {
+        if (this->cardsList[iThis].isLessThan(deck.cardsList[iD])) {
+            sumDeck.addCard(this->cardsList[iThis]);
+            iThis++;
+        } else {
+            sumDeck.addCard(deck.cardsList[iD]);
+            iD++;
+        }
+    }
+    while (iThis < this->cardsList.size()) {
+        sumDeck.addCard(this->cardsList[iThis]);
+        iThis++;
+    }
+
+    while (iD < deck.cardsList.size()) {
+        sumDeck.addCard(deck.cardsList[iD]);
+        iD++;
+    }
+    return sumDeck;
+}
+Deck Deck::mergeSort() {
+    if (this->cardsList.size() == 1) {
+        return *this;
+    }
+    int mid = floor(this->cardsList.size() / 2);
+    Deck leftDeck = this->subdeck(0,mid).mergeSort();
+    Deck rightDeck = this->subdeck(mid,this->cardsList.size()).mergeSort();
+
+    return leftDeck.merge(rightDeck);
 }
