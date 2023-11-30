@@ -1,3 +1,13 @@
+/*
+Snowman Game
+Authors: Akshay Kuchibhatla and Jackson Curtis
+CSC222
+A parody of the classic word-guessing game 
+"hangman" where a snowman progressively 
+melts while the user is trying to guess a
+word.
+*/
+
 enum Stage {
     FULL = 6,
     NO_HAT = 12,
