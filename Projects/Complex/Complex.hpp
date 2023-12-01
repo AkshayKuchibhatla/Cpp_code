@@ -26,7 +26,6 @@ class Complex {
             this->polar = true;
 
         }
-        
 
         // Accessor functions
         double getReal() {
@@ -42,6 +41,9 @@ class Complex {
         double getTheta() {
             if (!this->polar) this->calculatePolar();
             return this->theta;
+        }
+        double abs() {
+            return pow(pow(this->real,2) + pow(this->imaginary, 2), 0.5);
         }
 
         // to_string() functions
