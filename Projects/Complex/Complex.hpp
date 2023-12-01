@@ -84,4 +84,9 @@ class Complex {
             if (c.polar == false) c.calculatePolar();
             return Complex(this->magnitude * c.magnitude, this->theta + c.theta, POLAR);
         }
+        Complex operator / (Complex c) {
+            if (this->polar == false) this->calculatePolar();
+            if (c.polar == false) c.calculatePolar();
+            return Complex(this->magnitude / c.magnitude, this->theta - c.theta, POLAR);
+        }
 };
