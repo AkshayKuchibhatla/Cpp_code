@@ -8,6 +8,14 @@ TEST_CASE("Complex objects can be added with +") {
     Complex x(3,4);
     Complex y(4,5);
     Complex z = x + y;
+    cout << x << endl;
+    cout << y << endl;
+    cout << z << endl;
     CHECK(z.getReal() == 7.0);
     CHECK(z.getImaginary() == 9.0);
 }
+
+// TEST_CASE("<< Operator successfully overloaded.") {
+//     Complex a(9,10);
+//     ostream x();
+// }
