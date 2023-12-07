@@ -1,95 +1,98 @@
 #include <iostream>
+#include <math.h>
+#include <string>
 #include "Complex.hpp"
 using namespace std;
 
-Complex::Complex() {
-    this->real = 0; 
+//========CARTESIAN SUBCLASS METHODS===================================
+// Constructors
+Cartesian::Cartesian() {
+    this->real = 0;
     this->imaginary = 0;
-    this->polar = false;
 }
-Complex::Complex(double r, double i) {
-    this->real = r; this->imaginary = i;
-    this->polar = false;
+Cartesian::Cartesian(double r, double i) {
+    this->real = r;
+    this->imaginary = i;
 }
-Complex::Complex(double m, double t, Flag) {
-    this->magnitude = m;
-    this->theta = t;
-    this->polar = true;
-
+Cartesian::Cartesian(Polar p) {
+    this->real = p.getMagnitude() * cos(p.getTheta());
+    this->imaginary = p.getMagnitude() * sin(p.getTheta());
 }
 
-// Accessor functions
-double Complex::getReal() {
+// Public interface
+double Cartesian::getReal() {
     return this->real;
 }
-double Complex::getImaginary() {
+double Cartesian::getImaginary() {
     return this->imaginary;
 }
-double Complex::getMagnitude() {
-    if (!this->polar) this->calculatePolar();
-    return this->magnitude;
-}
-double Complex::getTheta() {
-    if (!this->polar) this->calculatePolar();
-    return this->theta;
-}
-double Complex::abs() {
+double Cartesian::abs() {
     return pow(pow(this->real,2) + pow(this->imaginary, 2), 0.5);
 }
-bool Complex::isPolar() {
-    return this->polar;
+
+// Operator overload
+Cartesian Cartesian::operator + (Cartesian c) {
+   Cartesian comp = Cartesian(this->getReal() + c.getReal(), this->getImaginary() + c.getImaginary());
+    return comp;
+}
+Cartesian Cartesian::operator - (Cartesian c) {
+    Cartesian comp = Cartesian(this->getReal() - c.getReal(), this->getImaginary() - c.getImaginary());
+    return comp;
+}
+Cartesian Cartesian::operator * (Cartesian c) {
+    return Cartesian(Polar(*this) * Polar(c));
+}
+Cartesian Cartesian::operator / (Cartesian c) {
+    return Cartesian(Polar(*this) / Polar(c));
 }
 
-// to_string() functions
-std::string Complex::cartesian_to_string() {
+std::string Cartesian::to_string() {
     return std::to_string(this->getReal()) + " + " 
     + std::to_string(this->getImaginary()) + "i";
 }
-std::string Complex::polar_to_string() {
-    std::string thet = std::to_string(this->getTheta());
-    std::string mag = std::to_string(this->getMagnitude());
-    return mag  + "e^" + thet + "i";
+
+//========POLAR SUBCLASS METHODS======================================
+// Constructors
+Polar::Polar() {
+    this->theta = 0;
+    this->magnitude = 0;
+}
+Polar::Polar(double m, double t) {
+    this->magnitude = m;
+    this->theta = t;
+}
+Polar::Polar(Cartesian c) {
+    this->magnitude = pow(pow(c.getReal(), 2) 
+    + pow(c.getImaginary(), 2), 0.5);
+    this->theta = atan(c.getImaginary()/c.getReal());
 }
 
-// Modifier functions
-void Complex::calculatePolar() {
-    this->magnitude = pow(pow(this->real, 2) 
-    + pow(this->imaginary, 2), 0.5);
-    this->theta = atan(this->imaginary/this->real);
-    this->polar = true;
+// Public interface
+double Polar::getMagnitude() {
+    return this->magnitude;
 }
-void Complex::calculateCartesian() {
-    assert(polar == true);
-    this->real = this->magnitude * cos(this->theta);
-    this->imaginary = this->magnitude * sin(this->theta);
+double Polar::getTheta() {
+    return this->theta;
+}
+double Polar::abs() {
+    return this->magnitude;
 }
 
 // Operator overloading
-Complex Complex::operator + (Complex c) {
-    Complex comp = Complex(this->getReal() + c.getReal(), this->getImaginary() + c.getImaginary());
-    comp.calculatePolar();
-    return comp;
+Polar Polar::operator + (Polar p) {
+    return Polar(Cartesian(*this) + Cartesian(p));
 }
-Complex Complex::operator - (Complex c) {
-    Complex comp = Complex(this->getReal() - c.getReal(), this->getImaginary() - c.getImaginary());
-    comp.calculatePolar();
-    return comp;
+Polar Polar::operator - (Polar p) {
+    return Polar(Cartesian(*this) - Cartesian(p));
 }
-Complex Complex::operator * (Complex c) {
-    if (this->polar == false) this->calculatePolar();
-    if (c.polar == false) c.calculatePolar();
-    return Complex(this->magnitude * c.magnitude, this->theta + c.theta, POLAR);
+Polar Polar::operator * (Polar p) {
+    return Polar(this->magnitude * p.magnitude, this->theta + p.theta);
 }
-Complex Complex::operator / (Complex c) {
-    if (this->polar == false) this->calculatePolar();
-    if (c.polar == false) c.calculatePolar();
-    return Complex(this->magnitude / c.magnitude, this->theta - c.theta, POLAR);
+Polar Polar::operator / (Polar p) {
+    return Polar(this->magnitude / p.magnitude, this->theta - p.theta);
 }
-ostream& operator << (ostream& os, Complex& c) {
-    if (c.isPolar()) {
-        os << c.polar_to_string();
-    } else {
-        os << c.cartesian_to_string();
-    }
-    return os;
+
+std::string Polar::to_string() {
+    return std::to_string(this->getMagnitude())  + "e^" 
+    + std::to_string(this->getTheta()) + "i";
 }
