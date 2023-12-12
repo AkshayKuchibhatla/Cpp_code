@@ -45,6 +45,6 @@ double Point::distance(Point p) {
 
 // to_string()
 std::string Point::to_string() {
-    return "(" + std::to_string(this->x) + ", " 
-    + std::to_string(this->y) + ")";
+    return "(" + std::to_string(int(this->x)) + ", " 
+    + std::to_string(int(this->y)) + ")";
 }
