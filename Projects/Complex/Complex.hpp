@@ -16,9 +16,6 @@ class Complex {
 
         // to_string
         virtual std::string to_string() = 0;
-        
-        // Print operator overload
-        friend std::ostream& operator << (std::ostream& os, Complex& c);
 };
 
 class Cartesian : public Complex {
@@ -43,6 +40,7 @@ class Cartesian : public Complex {
 
         // to_string() and <<
         std::string to_string() override;
+        friend std::ostream& operator << (std::ostream& os, Cartesian& c);
 };
 
 class Polar: public Complex {
@@ -67,5 +65,5 @@ class Polar: public Complex {
 
         // to_string()
         std::string to_string() override;
-        friend std::ostream& operator << (std::ostream& os, Polar& c);
+        friend std::ostream& operator << (std::ostream& os, Polar& p);
 };

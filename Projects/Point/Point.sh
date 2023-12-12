@@ -1,2 +1,2 @@
-g++ -std=c++11 Point.cpp test_Point.cpp
+g++ -std=c++11 Point.cpp test_points.cpp
 ./a.out

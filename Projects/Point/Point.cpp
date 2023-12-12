@@ -19,6 +19,16 @@ Point Point::operator + (Point p) {
 Point Point::operator - (Point p) {
     return Point(this->x - p.x, this->y - p.y);
 }
+ostream& operator << (ostream& os, Point& p) {
+    os << p.to_string();
+    return os;
+}
+Point Point::operator * (Point p) {
+    return Point(this->x * p.x, this->y * p.y);
+}
+Point operator * (int i, Point p) {
+    return Point(p.getX() * i, p.getY() * i);
+}
 
 // Public interface
 double Point::getX() {
@@ -35,10 +45,6 @@ double Point::distance(Point p) {
 
 // to_string()
 std::string Point::to_string() {
-    return "(" + std::to_string(this->x) + "," 
+    return "(" + std::to_string(this->x) + ", " 
     + std::to_string(this->y) + ")";
-}
-ostream& operator << (ostream& os, Point& p) {
-    os << p.to_string();
-    return os;
 }

@@ -45,6 +45,10 @@ Cartesian Cartesian::operator * (Cartesian c) {
 Cartesian Cartesian::operator / (Cartesian c) {
     return Cartesian(Polar(*this) / Polar(c));
 }
+std::ostream& operator << (std::ostream& os, Cartesian& c) {
+    os << c.to_string();
+    return os;
+}
 
 std::string Cartesian::to_string() {
     return std::to_string(this->getReal()) + " + " 
@@ -90,6 +94,10 @@ Polar Polar::operator * (Polar p) {
 }
 Polar Polar::operator / (Polar p) {
     return Polar(this->magnitude / p.magnitude, this->theta - p.theta);
+}
+std::ostream& operator << (std::ostream& os, Polar& p) {
+    os << p.to_string();
+    return os;
 }
 
 std::string Polar::to_string() {
