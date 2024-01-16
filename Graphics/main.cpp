@@ -1,63 +1,90 @@
 #include <iostream>
 #include "game.h"
 #include "Rectangle.h"
+#include <unistd.h>
+#include <SDL2/SDL.h>
 using namespace std;
 
-enum ColorChangeStatus {ASCENDING, DESCENDING};
+// First, initialize the singleton classes:
+Player *Player::instance = NULL;
 
 int main(int argc, char* argv[]) {
-    int SCREEN_WIDTH = 1024;
-    int SCREEN_HEIGHT = 600;
-    Game game("GAME", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, 
-    SCREEN_HEIGHT, SDL_WINDOW_SHOWN, 0, 0, 0, 100);
+    Game game("GAME", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, Game::SCREEN_WIDTH, 
+    Game::SCREEN_HEIGHT, SDL_WINDOW_SHOWN, 0, 0, 0, 100);
     cout << "Starting game..." << endl;
 
-    Rectangle recy(312, 100, 400, 400, 0, 0, 0, 0);
-    ColorChangeStatus status = ASCENDING;
+    Player *MC = Player::getInstance(); // MC = Main Character.
+
+    const float gravity = 2;
+    const float friction = 0.7;
+    const float airResistance = 0.9;
 
     while (game._GAMESTATE != EXIT) {
+        usleep(16667);
         SDL_Event evnt;
         SDL_PollEvent(&evnt);
 
         game.clearScreen();
-        recy.draw(game._RENDERER);
-        game.updateScreen();
 
-        if (status == ASCENDING) {
-            if (recy.fillColor[0] < 255) {
-                recy.fillColor[0] += 5;
-                recy.fillColor[1] += 5;
-                recy.fillColor[2] += 5;
-                recy.fillColor[3] += 5;
-
-                recy.rectangle.x++;
-                recy.rectangle.h++;
-                recy.rectangle.w++;
-            } else {
-                status = DESCENDING;
-            }
-        }
-
-        if (status == DESCENDING) {
-            if (recy.fillColor[0] > 0) {
-                recy.fillColor[0] -= 5;
-                recy.fillColor[1] -= 5;
-                recy.fillColor[2] -= 5;
-                recy.fillColor[3] -= 5;
-
-                recy.rectangle.x--;
-                recy.rectangle.h--;
-                recy.rectangle.w--;
-            } else {
-                status = ASCENDING;
-            }
-        }
-
-        switch (evnt.type) {
+        switch(evnt.type) {
             case SDL_QUIT:
                 game._GAMESTATE = EXIT;
                 break;
+
+            case SDL_KEYDOWN:
+               { const Uint8 *keyboardState = SDL_GetKeyboardState(0);
+
+                if (keyboardState[SDL_SCANCODE_W]) {
+                    if (MC->rectangle.y > Game::SCREEN_HEIGHT - MC->rectangle.h - 10) 
+                        MC->ySpeed = -20;
+                }
+                if (keyboardState[SDL_SCANCODE_A]) {
+                    MC->xMovement = LEFT;
+                }
+                if (keyboardState[SDL_SCANCODE_S]) {
+                    if (MC->rectangle.y > 0) 
+                        MC->ySpeed = 20;
+                }
+                if (keyboardState[SDL_SCANCODE_D]) {
+                    MC->xMovement = RIGHT;
+                }
+                if (keyboardState[SDL_SCANCODE_LSHIFT] || keyboardState[SDL_SCANCODE_RSHIFT]) {
+                    MC->xMovement = NONE;
+                    MC->xSpeed = 0;
+                }
+                break;}
+
+            case SDL_KEYUP:
+                MC->xMovement = NONE;
+                // yMovement = NONE;
+                break;
         }
+
+        if (MC->xMovement == LEFT) {
+            MC->xSpeed = -12;
+        }
+        if (MC->xMovement == RIGHT) {
+            MC->xSpeed = 12;
+        }
+
+        MC->rectangle.y += MC->ySpeed;
+        MC->ySpeed += gravity;
+        MC->rectangle.x += MC->xSpeed;
+
+        if (MC->isTouchingGround()) {
+            MC->xSpeed *= friction;
+        } else {
+            MC->xSpeed *= airResistance;
+        }
+
+        MC->checkEdges();
+        // if (MC->isTouchingPlatform()) {
+        //     cout << "Touching platform.";
+        // }
+
+        MC->draw(game._RENDERER);
+        // game.drawPlatforms();
+        game.updateScreen();
     }
     
     return 0;
