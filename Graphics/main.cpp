@@ -5,6 +5,14 @@
 #include <SDL2/SDL.h>
 using namespace std;
 
+/* This is a simple platformer that uses the WASD keys to control a character.
+    you can jump on or near platforms. The collisions are not very proficient,
+    but due to time constraints they are partially done.
+
+    Creator: Akshay Kuchibhatla
+
+*/
+
 // First, initialize the singleton classes:
 Player *Player::instance = NULL;
 
@@ -20,7 +28,7 @@ int main(int argc, char* argv[]) {
     const float airResistance = 0.9;
 
     while (game._GAMESTATE != EXIT) {
-        usleep(16667);
+        usleep(20000);
         SDL_Event evnt;
         SDL_PollEvent(&evnt);
 
@@ -56,7 +64,6 @@ int main(int argc, char* argv[]) {
 
             case SDL_KEYUP:
                 MC->xMovement = NONE;
-                // yMovement = NONE;
                 break;
         }
 
@@ -71,20 +78,19 @@ int main(int argc, char* argv[]) {
         MC->ySpeed += gravity;
         MC->rectangle.x += MC->xSpeed;
 
-        if (MC->isTouchingGround()) {
+        if (MC->isTouchingGround() || MC->isTouchingPlatform(game._PLATFORMS)) {
             MC->xSpeed *= friction;
         } else {
             MC->xSpeed *= airResistance;
         }
 
         MC->checkEdges();
-        // if (MC->isTouchingPlatform()) {
-        //     cout << "Touching platform.";
-        // }
+        MC->checkPlatforms(game._PLATFORMS);
 
         MC->draw(game._RENDERER);
-        // game.drawPlatforms();
+        game.drawPlatforms();
         game.updateScreen();
+        // game._GAMESTATE = EXIT;
     }
     
     return 0;

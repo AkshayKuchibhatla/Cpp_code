@@ -19,8 +19,8 @@ class Point {
         double distance(Point p);
 
         // to_string()
-        std::string to_string();
-        friend std::ostream& operator << (std::ostream& os, Point& c);
+        // std::string to_string();
+        // friend std::ostream& operator << (std::ostream& os, Point& c);
 };
 
 Point operator * (int i, Point p);

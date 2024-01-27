@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAME_H
+#define GAME_H
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
@@ -15,8 +16,7 @@ class Game {
         static Game *instance;
 
     public:
-        static vector<Platform> platforms;
-
+        vector<Platform> _PLATFORMS;
         static const int SCREEN_HEIGHT = 600;
         static const int SCREEN_WIDTH = 1024;
 
@@ -31,3 +31,4 @@ class Game {
         void updateScreen();
         void drawPlatforms();
 };
+#endif

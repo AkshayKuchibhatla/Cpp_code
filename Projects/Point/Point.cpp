@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <math.h>
-#include "Point.hpp"
+#include "Point.h"
 using namespace std;
 
 Point::Point() {
@@ -20,7 +20,7 @@ Point Point::operator - (Point p) {
     return Point(this->x - p.x, this->y - p.y);
 }
 ostream& operator << (ostream& os, Point& p) {
-    os << p.to_string();
+    // os << p.to_string();
     return os;
 }
 Point Point::operator * (Point p) {
@@ -44,7 +44,7 @@ double Point::distance(Point p) {
 }
 
 // to_string()
-std::string Point::to_string() {
-    return "(" + std::to_string(int(this->x)) + ", " 
-    + std::to_string(int(this->y)) + ")";
-}
+// std::string Point::to_string() {
+//     return "(" + std::to_string(int(this->x)) + ", " 
+//     + std::to_string(int(this->y)) + ")";
+// }

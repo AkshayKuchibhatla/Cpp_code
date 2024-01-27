@@ -33,6 +33,28 @@ void Rectangle::draw(SDL_Renderer *renderer) {
     SDL_RenderFillRect(renderer, &this->rectangle);
 }
 
+bool Rectangle::overlaps(Rectangle r) {
+
+    // if rectangle has area 0, no overlap
+    if (this->rectangle.x == this->rectangle.x + this->rectangle.w 
+    || this->rectangle.y == this->rectangle.y + this->rectangle.h 
+    || r.rectangle.x + r.rectangle.w == r.rectangle.x 
+    || r.rectangle.y == r.rectangle.y + r.rectangle.h) {
+        return false;
+    }
+    // If one rectangle is on left side of other
+    if (this->rectangle.x > r.rectangle.x + r.rectangle.w 
+    || r.rectangle.x > this->rectangle.x + this->rectangle.w) {
+        return false;
+    }
+    // If one rectangle is above other
+    if (this->rectangle.y + this->rectangle.h < r.rectangle.y 
+    || r.rectangle.y + r.rectangle.h < this->rectangle.y) {
+        return false;
+    }
+    return true;
+}
+
 // Player class functions
 Player::~Player() {}
 Player* Player::getInstance()  {
@@ -47,14 +69,20 @@ Player* Player::getInstance()  {
     }
 }
 
+void Player::switchXDirection() {
+    if (this->xMovement == LEFT) this->xMovement = RIGHT;
+    if (this->xMovement == RIGHT) this->xMovement = LEFT;
+}
 void Player::checkEdges() {
     if (this->rectangle.x + this->rectangle.w > Game::SCREEN_WIDTH) {
         this->rectangle.x = Game::SCREEN_WIDTH - this->rectangle.w;
         this->xSpeed *= -1;
+        this->switchXDirection();
     }
     if (this->rectangle.x < 0) {
         this->rectangle.x = 0;
         this->xSpeed *= -1;
+        this->switchXDirection();
     }
     if (this->rectangle.y + this->rectangle.h > Game::SCREEN_HEIGHT) {
         this->rectangle.y = Game::SCREEN_HEIGHT - this->rectangle.h;
@@ -65,29 +93,38 @@ void Player::checkEdges() {
         this->ySpeed = 0;
     }
 }
-void Player::checkPlatforms() {
-    
+void Player::checkPlatforms(vector<Platform> platforms) {
+    /* This is a work in progress.*/
+    int platformMiddleX;
+    int platformMiddleY;
+    for (int i = 0; i < platforms.size(); i++) {
+        platformMiddleX = platforms[i].rectangle.x + (platforms[i].rectangle.w / 2);
+        platformMiddleY = platforms[i].rectangle.y + (platforms[i].rectangle.h / 2);
+        if (abs(this->rectangle.x + this->xSpeed - platformMiddleX) < platforms[i].rectangle.w / 2
+        && abs(this->rectangle.y + this->ySpeed - platformMiddleY) < platforms[i].rectangle.h / 2) {
+            if (this->xSpeed < 0) {
+                this->rectangle.x = platforms[i].rectangle.x + platforms[i].rectangle.w;
+            } else {
+                this->rectangle.x = platforms[i].rectangle.x - this->rectangle.w;
+            }
+
+            if (this->ySpeed < 0) {
+                this->rectangle.y = platforms[i].rectangle.y - this->rectangle.h;
+            } else {
+                this->rectangle.y = platforms[i].rectangle.y + platforms[i].rectangle.h;
+            }
+        }
+    }
+    return;
 }
 
-// bool Player::isTouchingPlatform() {
-//     for (int i = 0; i < Game::platforms.size(); i++) {
-//         if (this->isTouchingPlatform(Game::platforms[i])) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
-bool Player::isTouchingPlatform(Platform p1) {
-    int platformMiddleYCoordinate = p1.rectangle.y + (p1.rectangle.h / 2);
-    int platformMiddleXCoordinate = p1.rectangle.x + (p1.rectangle.w / 2);
-    if (abs(platformMiddleYCoordinate - this->rectangle.y) < p1.rectangle.h / 2
-    || abs(platformMiddleYCoordinate - (this->rectangle.y + this->rectangle.h)) < p1.rectangle.h / 2
-    || abs(platformMiddleXCoordinate - this->rectangle.x) < p1.rectangle.w / 2
-    || abs(platformMiddleXCoordinate - (this->rectangle.x + this->rectangle.x)) < p1.rectangle.w / 2) {
-        return true;
-    } else {
-        return false;
+bool Player::isTouchingPlatform(vector<Platform> platforms) {
+    for (int i = 0; i < platforms.size(); i++) {
+        if (this->overlaps(platforms[i])) {
+            return true;
+        }
     }
+    return false;
 }
 bool Player::isTouchingGround() {
     if (this->rectangle.y + this->rectangle.h >= Game::SCREEN_HEIGHT) {

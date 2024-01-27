@@ -17,17 +17,15 @@ Game::Game(const char* title, int x, int y, int w, int h, Uint32 flags, int r, i
     this->backgroundColor[2] = b;
     this->backgroundColor[3] = a;
 
-    // platforms = vector<Platform>(4);
-    // platforms[0] = Platform(100, 550, 50, 15, 255, 0, 255, 90);
-    // platforms[1] = Platform(150, 500, 50, 15, 255, 0, 255, 90);
-    // platforms[2] = Platform(200, 600, 50, 15, 255, 0, 255, 90);
-    // platforms[3] = Platform(250, 650, 50, 15, 255, 0, 255, 90);
+    this->_PLATFORMS.push_back(Platform(150, 500, 50, 15, 255, 0, 255, 90));
+    // this->_PLATFORMS.push_back(Platform(200, 450, 50, 15, 255, 0, 255, 90));
+    // this->_PLATFORMS.push_back(Platform(250, 400, 50, 15, 255, 0, 255, 90));
+    // this->_PLATFORMS.push_back(Platform(300, 350, 50, 15, 255, 0, 255, 90));
 };
 Game::~Game() {}
 Game::Game() {}
 
 void Game::clearScreen() {
-    usleep(20000);
     SDL_SetRenderDrawColor(
         this->_RENDERER, 
         this->backgroundColor[0], 
@@ -40,8 +38,8 @@ void Game::clearScreen() {
 void Game::updateScreen() {
     SDL_RenderPresent(this->_RENDERER);
 }
-// void Game::drawPlatforms() {
-//     for (int i = 0; i < platforms.size(); i++) {
-//         platforms[i].draw(this->_RENDERER);
-//     }
-// }
+void Game::drawPlatforms() {
+    for (int i = 0; i < _PLATFORMS.size(); i++) {
+        _PLATFORMS[i].draw(this->_RENDERER);
+    }
+}

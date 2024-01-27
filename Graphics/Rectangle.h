@@ -1,12 +1,14 @@
-#pragma once
+#ifndef RECTANGLE_H
+#define RECTANGLE_H
 
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <vector>
+//#include "game.h"
 using namespace std;
 
-const int X = 0;
-const int Y = 0;
+const int X = 130;
+const int Y = 490;
 const int W = 30;
 const int H = 30;
 const int R = 0;
@@ -30,6 +32,8 @@ class Rectangle { // The base class for all objects generated within the game.
         ~Rectangle();
 
         void draw(SDL_Renderer *renderer);
+
+        bool overlaps(Rectangle r);
 };
 
 class Platform: public Rectangle { // A platformer's gotta have platforms.
@@ -57,9 +61,10 @@ class Player: public Rectangle { // Singleton class of the player.
         ~Player();
 
         void checkEdges();
-        void checkPlatforms();
+        void checkPlatforms(vector<Platform> platforms);
+        void switchXDirection();
 
-        bool isTouchingPlatform();
-        bool isTouchingPlatform(Platform p1);
+        bool isTouchingPlatform(vector<Platform> platforms);
         bool isTouchingGround();
 };
+#endif
