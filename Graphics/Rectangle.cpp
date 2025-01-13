@@ -4,6 +4,7 @@
 #include "game.h"
 #include <vector>
 #include <cmath>
+#include <unistd.h>
 #include <iostream>
 using namespace std;
 
@@ -93,34 +94,41 @@ void Player::checkEdges() {
         this->ySpeed = 0;
     }
 }
-void Player::checkPlatforms(vector<Platform> platforms) {
-    /* This is a work in progress.*/
-    int platformMiddleX;
-    int platformMiddleY;
-    for (int i = 0; i < platforms.size(); i++) {
-        platformMiddleX = platforms[i].rectangle.x + (platforms[i].rectangle.w / 2);
-        platformMiddleY = platforms[i].rectangle.y + (platforms[i].rectangle.h / 2);
-        if (abs(this->rectangle.x + this->xSpeed - platformMiddleX) < platforms[i].rectangle.w / 2
-        && abs(this->rectangle.y + this->ySpeed - platformMiddleY) < platforms[i].rectangle.h / 2) {
-            if (this->xSpeed < 0) {
-                this->rectangle.x = platforms[i].rectangle.x + platforms[i].rectangle.w;
-            } else {
-                this->rectangle.x = platforms[i].rectangle.x - this->rectangle.w;
-            }
-
-            if (this->ySpeed < 0) {
-                this->rectangle.y = platforms[i].rectangle.y - this->rectangle.h;
-            } else {
-                this->rectangle.y = platforms[i].rectangle.y + platforms[i].rectangle.h;
-            }
+void Player::resolvePlatformCollision(Platform platform) {
+    if (this->ySpeed < 0) {
+        while (this->rectangle.y < platform.rectangle.y + platform.rectangle.h + 1) {
+            this->rectangle.y++;
+        } 
+    } else if (this->ySpeed > 0) {
+        while (this->rectangle.y + this->rectangle.h > platform.rectangle.y - 1) {
+            this->rectangle.y--;
         }
-    }
-    return;
+    } else {}
+    this->ySpeed = 0;
+
+    double lastXPos = this->rectangle.x;
+    
+    if (xSpeed < 0) {
+        while (this->rectangle.x < platform.rectangle.x + platform.rectangle.w + 1) {
+            this->rectangle.x++;
+        }
+    } else if (xSpeed > 0) {
+        while (this->rectangle.x + this->rectangle.w > platform.rectangle.x - 1) {
+            this->rectangle.x--;
+        }
+    } else {}
+    this->xSpeed = 0;
+    // if (this->rectangle.x > platform.rectangle.x + platform.rectangle.w/2) {
+    //     this->rectangle.x = platform.rectangle.x + platform.rectangle.w + 1;
+    // } else if (this->rectangle.x + this->rectangle.w < platform.rectangle.x) {
+    //     this->rectangle.x = platform.rectangle.x - this->rectangle.w - 1;
+    // } else {}
 }
 
 bool Player::isTouchingPlatform(vector<Platform> platforms) {
     for (int i = 0; i < platforms.size(); i++) {
         if (this->overlaps(platforms[i])) {
+            resolvePlatformCollision(platforms[i]);
             return true;
         }
     }

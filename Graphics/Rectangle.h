@@ -62,6 +62,7 @@ class Player: public Rectangle { // Singleton class of the player.
 
         void checkEdges();
         void checkPlatforms(vector<Platform> platforms);
+        void resolvePlatformCollision(Platform platform);
         void switchXDirection();
 
         bool isTouchingPlatform(vector<Platform> platforms);

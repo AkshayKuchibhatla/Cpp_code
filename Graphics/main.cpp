@@ -10,7 +10,7 @@ using namespace std;
     but due to time constraints they are partially done.
 
     Creator: Akshay Kuchibhatla
-
+    Jan 27 2024
 */
 
 // First, initialize the singleton classes:
@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
     Player *MC = Player::getInstance(); // MC = Main Character.
 
     const float gravity = 2;
-    const float friction = 0.7;
+    const float friction = 0.5;
     const float airResistance = 0.9;
 
     while (game._GAMESTATE != EXIT) {
@@ -41,7 +41,9 @@ int main(int argc, char* argv[]) {
 
             case SDL_KEYDOWN:
                { const Uint8 *keyboardState = SDL_GetKeyboardState(0);
-
+                if (keyboardState[SDL_SCANCODE_ESCAPE]) {
+                    game._GAMESTATE = EXIT;
+                }
                 if (keyboardState[SDL_SCANCODE_W]) {
                     if (MC->rectangle.y > Game::SCREEN_HEIGHT - MC->rectangle.h - 10) 
                         MC->ySpeed = -20;
@@ -85,7 +87,6 @@ int main(int argc, char* argv[]) {
         }
 
         MC->checkEdges();
-        MC->checkPlatforms(game._PLATFORMS);
 
         MC->draw(game._RENDERER);
         game.drawPlatforms();
