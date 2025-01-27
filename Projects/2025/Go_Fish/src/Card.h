@@ -62,6 +62,7 @@ struct Deck {
     int binarySearch(Card& card, int low, int high);
     int findCard(Card& card);
     int lowestCardIndex(int low, int high);
+    Card drawCard();
     Deck subdeck(int lowerIndex, int upperIndex);
     Deck merge(Deck deck);
     Deck mergeSort();

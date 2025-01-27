@@ -119,6 +119,7 @@ bool Card::isLessThan(Card card) {
 // @param faceUp: draw card facing up or down?
 // @param narrow: draw the card full width or slightly narrower?
 void Card::draw(int row, int col, bool faceUp, bool narrow) {
+    // cout << "Rendering " << this->to_string() << "\n\r";
     init_pair(1, COLOR_BLACK, COLOR_WHITE);
     init_pair(2, COLOR_RED, COLOR_WHITE);
 
@@ -144,10 +145,10 @@ void Card::draw(int row, int col, bool faceUp, bool narrow) {
 
     if (!faceUp) {
         if (narrow) {
-            mvaddstr(row + 1, col + 1, " ");
+            mvaddstr(row + 1, col + 1, "✪");
             mvaddstr(row + 2, col + 1, " ");
         } else {
-            mvaddstr(row + 1, col + 1, "   ");
+            mvaddstr(row + 1, col + 1, " ✪ ");
             mvaddstr(row + 2, col + 1, "   ");
         }
         goto endOfDraw;
@@ -246,7 +247,7 @@ Deck::Deck() {
 void Deck::print() {
     // Prints every card in the deck, line by line.
     for (int i = 0; i < this->cardsList.size(); i++) {
-        cout << this->cardsList[i].to_string() << endl;
+        cout << this->cardsList[i].to_string() << "\n\r";
     }
 }
 void Deck::swapItems(int index1, int index2) {
@@ -343,4 +344,11 @@ Deck Deck::mergeSort() {
     Deck rightDeck = this->subdeck(mid,this->cardsList.size()).mergeSort();
 
     return leftDeck.merge(rightDeck);
+}
+Card Deck::drawCard() {
+    srand(time(NULL));
+    int index = rand() % this->cardsList.size();
+    Card c = this->cardsList.at(index);
+    this->cardsList.erase(this->cardsList.begin() + index);
+    return c;
 }
