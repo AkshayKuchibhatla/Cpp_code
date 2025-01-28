@@ -16,8 +16,6 @@ GoFish::GoFish(int numberOfPlayers) {
     this->fishPile.shuffle(); // Shuffle the deck.
 
     int cardsPerPlayer = (numberOfPlayers > 2) ? 5 : 7; // If there are 3 or 4 players, each player starts with 5 cards. Otherwise, 7.
-    cout << "Number of players: " << numberOfPlayers << "\n\r";
-    cout << "Cards per player: " << cardsPerPlayer << "\n\r";
     int i,j;
 
     for (i = 0; i < numberOfPlayers; i++) {
@@ -35,6 +33,22 @@ GoFish::GoFish(int numberOfPlayers) {
     playerList[1].renderHand();
 
     startGame();
+}
+GoFish::GoFish(bool testing) {
+    // Dummy object initializes attributes for two players but does not render anything or start the game loop.
+    int cardsPerPlayer = 7;
+    int i,j;
+
+    for (i = 0; i < 2; i++) {
+        this->playerList.push_back(GFPlayer(i)); // Create new players
+    }
+    
+    for (i = 0; i < cardsPerPlayer; i++) {
+        for (j = 0; j < 2; j++) {
+            dealCard(j); // Deal cards to each player.
+        }
+    }
+    currentPlayer = 0;
 }
 void GoFish::startGame() {
     char x;
@@ -60,7 +74,7 @@ void GoFish::refreshScreen() {
     usleep(1500000);
 }
 void GoFish::givenMessage(bool param) {
-        if (!param) {
+    if (!param) {
         printGoFishMsg(getNextPlayer());
         dealCard(currentPlayer);
         currentPlayer = getNextPlayer();
@@ -68,7 +82,7 @@ void GoFish::givenMessage(bool param) {
         printYesMsg(getNextPlayer());
     }
     refresh();
-    usleep(4000000);
+    usleep(2000000);
 }
 
 Deck GoFish::getFishPile() {
@@ -76,7 +90,9 @@ Deck GoFish::getFishPile() {
 }
 // @param playerNumber: The player to which to deal a card.
 void GoFish::dealCard(int playerNumber) {
-    this->playerList.at(playerNumber).addCard(this->fishPile.drawCard());
+    if (!this->fishPile.cardsList.empty()) {
+        this->playerList.at(playerNumber).addCard(this->fishPile.drawCard());
+    }
 }
 void GoFish::nextTurn() {
     if (++currentPlayer == playerList.size()) {
@@ -235,4 +251,7 @@ bool GoFish::giveCards(int askingPlayer, int answeringPlayer, char rank) {
     }
 
     return true;
+}
+vector<GFPlayer> GoFish::getPlayerList() {
+    return playerList;
 }

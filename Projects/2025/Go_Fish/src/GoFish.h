@@ -14,8 +14,11 @@ class GoFish { // Singleton class that controls the flow of gameplay.
     public:
         // Default constructor
         GoFish();
-        // Game accepts 2 to 4 players
+        // Game accepts only 2 players for now.
+        // TODO: implement more than one players.
         GoFish(int numberOfPlayers);
+        // Constructor for dummy object to conduct tests
+        GoFish(bool testing);
         // Returns the fishpile
         Deck getFishPile();
         // Deals a random card to a player.
@@ -41,4 +44,6 @@ class GoFish { // Singleton class that controls the flow of gameplay.
         void refreshScreen();
         // Converts rank enum into a single character.
         char rankToChar(Rank r);
+        // Returns the player list
+        vector<GFPlayer> getPlayerList();
 };

@@ -77,54 +77,54 @@ void GFPlayer::printHand() {
 void GFPlayer::addCard(Card c) {
     hand.push_back(c);
 }
-// string GFPlayer::rankToString(Rank ra) {
-//     string r;
-//     switch (ra) {
-//         case TWO:
-//             r = "Two"; 
-//             break;
-//         case THREE:
-//             r = "Three"; 
-//             break;
-//         case FOUR:
-//             r = "Four"; 
-//             break;
-//         case FIVE:
-//             r = "Five"; 
-//             break;
-//         case SIX:
-//             r = "Six"; 
-//             break;
-//         case SEVEN:
-//             r = "Seven"; 
-//             break;
-//         case EIGHT:
-//             r = "Eight"; 
-//             break;
-//         case NINE:
-//             r = "Nine"; 
-//             break;
-//         case TEN:
-//             r = "Ten"; 
-//             break;
-//         case JACK:
-//             r = "Jack"; 
-//             break;
-//         case QUEEN:
-//             r = "Queen"; 
-//             break;
-//         case KING:
-//             r = "King"; 
-//             break;
-//         case ACE:
-//             r = "Ace"; 
-//             break;
-//         default:
-//             r = "";
-//             break;
-//     }
-//     return r;
-// }
+string GFPlayer::rankToString(Rank ra) {
+    string r;
+    switch (ra) {
+        case TWO:
+            r = "Two"; 
+            break;
+        case THREE:
+            r = "Three"; 
+            break;
+        case FOUR:
+            r = "Four"; 
+            break;
+        case FIVE:
+            r = "Five"; 
+            break;
+        case SIX:
+            r = "Six"; 
+            break;
+        case SEVEN:
+            r = "Seven"; 
+            break;
+        case EIGHT:
+            r = "Eight"; 
+            break;
+        case NINE:
+            r = "Nine"; 
+            break;
+        case TEN:
+            r = "Ten"; 
+            break;
+        case JACK:
+            r = "Jack"; 
+            break;
+        case QUEEN:
+            r = "Queen"; 
+            break;
+        case KING:
+            r = "King"; 
+            break;
+        case ACE:
+            r = "Ace"; 
+            break;
+        default:
+            r = "";
+            break;
+    }
+    return r;
+}
 void GFPlayer::makeBooks() {
     // TODO: In this function, sort the cards in the hand of the player for greater efficiency.
     char rankChar;
@@ -139,7 +139,7 @@ void GFPlayer::makeBooks() {
 
         if (counter == 4) {
             loopCounter = 4;
-            books.push_back(to_string(i));
+            books.push_back(rankToString(Rank(i)));
             while(loopCounter > 0) {
                 for (j = 0; j < hand.size(); j++) {
                     if (hand.at(j).rank == Rank(i)) {

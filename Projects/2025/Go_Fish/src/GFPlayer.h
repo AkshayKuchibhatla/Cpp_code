@@ -47,5 +47,5 @@ class GFPlayer { // Object describing a player and their actions
         // Makes all the sets of 4.
         void makeBooks();
         // Returns a string given a rank
-        // string rankToString(Rank ra);
+        string rankToString(Rank ra);
 };
