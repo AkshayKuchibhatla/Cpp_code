@@ -6,11 +6,19 @@ using namespace std;
 
 class GFPlayer { // Object describing a player and their actions
     vector<Card> hand; // The player's hand.
-    vector<string> tricks; // Stores all the ranks of cards that the user has collected 4 each of.
+    vector<string> books; // Stores all the ranks of cards that the user has collected 4 each of.
     int playerNumber; // Helps with orientation of cards on the playing field.
     bool handFaceUp; // Tells whether the cards in the player's hand are face up or not.
 
     public:
+        int startRow;
+        int startCol;
+        int questionRow;
+        int questionCol;
+        int promptRow;
+        int promptCol;
+        int answerRow;
+        int answerCol;
         // Adds the specified card to the player's hand.
         // @param c: the card.
         void addCard(Card c);
@@ -28,6 +36,10 @@ class GFPlayer { // Object describing a player and their actions
         void showHand();
         // Print the cards in the hand in string form to the console.
         void printHand();
+        // Remove card at index in hand.
+        void removeCard(int index);
         // Returns the player's hand.
         vector<Card> getHand();
+        // Returns all the books that the player has made.
+        vector<string> getBooks();
 };
