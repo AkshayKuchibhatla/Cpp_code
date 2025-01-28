@@ -30,7 +30,7 @@ GoFish::GoFish(int numberOfPlayers) {
         }
     }
     playerList[0].showHand();
-    playerList[1].showHand();
+    playerList[1].hideHand();
     playerList[0].renderHand();
     playerList[1].renderHand();
 
@@ -43,9 +43,9 @@ void GoFish::startGame() {
     while (!gameOver()) {
         x = askCard(currentPlayer);
         bool given = giveCards(currentPlayer, getNextPlayer(), x);
-        cout << given << "\n\r";
         
         givenMessage(given);
+        playerList.at(0).makeBooks();
         refreshScreen();
     }
 }
@@ -54,6 +54,8 @@ void GoFish::refreshScreen() {
     refresh();
     playerList[0].renderHand();
     playerList[1].renderHand();
+    playerList[0].renderBooks();
+    playerList[1].renderBooks();
     refresh();
     usleep(1500000);
 }
@@ -66,7 +68,7 @@ void GoFish::givenMessage(bool param) {
         printYesMsg(getNextPlayer());
     }
     refresh();
-    usleep(2000000);
+    usleep(4000000);
 }
 
 Deck GoFish::getFishPile() {
@@ -94,15 +96,69 @@ int GoFish::getNextPlayer() {
     if (currentPlayer == 0) return 1;
     return 0;
 }
-char GoFish::askCard(int player) {
-    if (player == 1) {
-        
+char GoFish::rankToChar(Rank r) {
+    char c;
+    switch (r) {
+        case TWO:
+        c = '2'; 
+        break;
+    case THREE:
+        c = '3'; 
+        break;
+    case FOUR:
+        c = '4'; 
+        break;
+    case FIVE:
+        c = '5'; 
+        break;
+    case SIX:
+        c = '6'; 
+        break;
+    case SEVEN:
+        c = '7'; 
+        break;
+    case EIGHT:
+        c = '8'; 
+        break;
+    case NINE:
+        c = '9'; 
+        break;
+    case TEN:
+        c = '1'; 
+        break;
+    case JACK:
+        c = 'j'; 
+        break;
+    case QUEEN:
+        c = 'q'; 
+        break;
+    case KING:
+        c = 'k'; 
+        break;
+    case ACE:
+        c = 'a'; 
+        break;
+    default:
+        c = '2';
+        break;
     }
-    int ch;
-    mvaddstr(playerList.at(player).promptRow, playerList.at(player).promptCol, "Enter a card rank: ");
-    ch = getch();
+    return c;
+}
+char GoFish::askCard(int player) {
+    int ch, y;
+    if (player == 1) {
+        srand(time(NULL));
+        y = rand() % playerList.at(1).getHand().size();
+        ch = rankToChar(playerList.at(1).getHand().at(y).rank);
+        // cout << char(ch) << "\n\r";
+    } else {
+        mvaddstr(playerList.at(player).promptRow, playerList.at(player).promptCol, "Enter a card rank: ");
+        ch = getch();
+    }
+
     string questionRoot = "Do you have any ";
-    questionRoot.append(string(1, ch));
+    questionRoot.append(string(1, char(ch)));
+    if (ch == '1') questionRoot.append(1, '0');
     questionRoot.append("'s?");
     char questionCopy[1024];
     strcpy(questionCopy, questionRoot.c_str());
@@ -175,7 +231,6 @@ bool GoFish::giveCards(int askingPlayer, int answeringPlayer, char rank) {
     if (cardsToBeGiven.size() == 0) return false;
 
     for (i = 0; i < cardsToBeGiven.size(); i++) {
-        cout << cardsToBeGiven.at(i).to_string() << "\n\r";
         playerList.at(askingPlayer).addCard(cardsToBeGiven.at(i));
     }
 

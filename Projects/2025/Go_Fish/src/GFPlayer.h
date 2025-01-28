@@ -19,6 +19,8 @@ class GFPlayer { // Object describing a player and their actions
         int promptCol;
         int answerRow;
         int answerCol;
+        int booksRow;
+        int booksCol;
         // Adds the specified card to the player's hand.
         // @param c: the card.
         void addCard(Card c);
@@ -42,4 +44,8 @@ class GFPlayer { // Object describing a player and their actions
         vector<Card> getHand();
         // Returns all the books that the player has made.
         vector<string> getBooks();
+        // Makes all the sets of 4.
+        void makeBooks();
+        // Returns a string given a rank
+        // string rankToString(Rank ra);
 };

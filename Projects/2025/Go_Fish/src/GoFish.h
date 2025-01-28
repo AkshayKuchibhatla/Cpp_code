@@ -39,4 +39,6 @@ class GoFish { // Singleton class that controls the flow of gameplay.
         void givenMessage(bool param);
         // Refreshes the screen and rerenders the hands of the players.
         void refreshScreen();
+        // Converts rank enum into a single character.
+        char rankToChar(Rank r);
 };
